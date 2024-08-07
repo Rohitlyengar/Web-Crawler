@@ -10,7 +10,7 @@ async function main()
     }
     else
     {
-        await crawlPage(process.argv[2])
+        console.log(await crawlPage(process.argv[2]))
     }
 }
 
