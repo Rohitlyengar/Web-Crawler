@@ -28,4 +28,27 @@ function getURLsFromHTML(htmlBody, baseURL)
     return URLs
 }
 
-export { normalizeURL, getURLsFromHTML };
+async function crawlPage(currentURL)
+{
+    try {
+        const response = await fetch(currentURL);
+
+        if(response.status > 399)
+        {
+            console.error(`Error Code ${response.status}: ${response.statusText} on ${currentURL}`);
+        }
+        else if(!response.headers.get('content-type').includes('text/html'))
+        {
+            console.error(`${response.headers.get('content-type')} cannot be crawled`)
+        }
+
+        console.log(`Starting to crawl ${currentURL}\n`);
+        console.log(await response.text());
+    }
+    catch(err)
+    {
+        console.error(err);
+    }
+}
+
+export { normalizeURL, getURLsFromHTML, crawlPage };
